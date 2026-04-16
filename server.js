@@ -11,7 +11,7 @@ const app = express();
 
 console.log("JWT Secret from env:", process.env.JWT_SECRET); // Debugging log
 const corsOptions = {    
-    origin: "http://localhost:5173",
+    origin: "https://notes-app-rr2n.onrender.com/",
     optionsSuccessStatus: 200
 }
 //middleware
