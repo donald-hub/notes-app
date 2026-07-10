@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+ // backend/controllers/auth.js (Node.js Environment)
+import crypto from "crypto"; // Works perfectly here without installation
 
 // REGISTER
 export const register = async (req, res) => {
@@ -74,4 +76,16 @@ export const login = async (req, res) => {
     console.error("Login error:", error);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+
+ 
+
+  export const sendOtp = (req, res) => {
+    // Generates a secure 6-digit OTP on the server
+    const otp = crypto.randomInt(100000, 1000000).toString();
+    
+    // TODO: Save OTP to database and send it to user via Email/SMS
+    
+    res.status(200).json({ message: "OTP sent successfully" });
 };
