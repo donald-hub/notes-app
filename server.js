@@ -4,7 +4,6 @@ import connectDB from "./src/config/db.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./src/routes/authRoutes.js";
-import emailRoutes from "./src/routes/emailRoutes.js";
 
 dotenv.config();
 
