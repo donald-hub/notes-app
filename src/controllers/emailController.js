@@ -24,6 +24,8 @@ export const forgotPassword = async (req, res) => {
 
     await user.save();
 
+    console.log("EMAIL_USER:", process.env.EMAIL_USER);
+    console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
     // Create transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -45,10 +47,11 @@ export const forgotPassword = async (req, res) => {
       message: "OTP sent successfully",
     });
   } catch (error) {
-  console.error("Forgot Password Error:", error);
+  console.error(error);
 
   res.status(500).json({
     message: error.message,
+    stack: error.stack,
   });
 }
 };
