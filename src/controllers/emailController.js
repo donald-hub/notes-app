@@ -1,6 +1,8 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+const dotenv = dotenv.config();
 
 export const forgotPassword = async (req, res) => {
   try {
