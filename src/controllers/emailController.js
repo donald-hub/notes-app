@@ -28,13 +28,16 @@ export const forgotPassword = async (req, res) => {
     console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
     // Create transporter
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
-
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true only for port 465
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+  await transporter.verify();
+  console.log("SMTP connection successful");
     // Send Email
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
