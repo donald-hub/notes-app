@@ -4,6 +4,7 @@ import connectDB from "./src/config/db.js";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./src/routes/authRoutes.js";
+import emailRoutes from "./src/routes/emailRoutes.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 //routes
 app.use("/api/notes", notesRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/email", emailRoutes);
 
 //server
 const port = process.env.PORT || 5001;
