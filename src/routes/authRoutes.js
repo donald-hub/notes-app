@@ -1,10 +1,13 @@
 import express from "express";
 import { register, login } from "../controllers/authController.js";
-import {mail} from  "../controllers/mail.js";
+import {forgotPassword, verifyOtp, resetPassword} from "../controllers/emailController.js";
 const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
-router.post("/reset", mail);
+
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-otp", verifyOtp);
+router.post("/reset-password", resetPassword);
 
 export default router;

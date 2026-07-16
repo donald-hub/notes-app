@@ -27,7 +27,6 @@ app.use((req, res, next) => {
 //routes
 app.use("/api/notes", notesRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/email", emailRoutes);
 
 //server
 const port = process.env.PORT || 5001;
