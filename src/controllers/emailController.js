@@ -23,14 +23,12 @@ export const forgotPassword = async (req, res) => {
     user.otpExpiry = Date.now() + 10 * 60 * 1000;
 
     await user.save();
-
-    console.log("EMAIL_USER:", process.env.EMAIL_USER);
-    console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
     // Create transporter
     const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
     secure: false, // true only for port 465
+    family: 4, // Use IPv4
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
