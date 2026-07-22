@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
+import { BrevoClient } from '@getbrevo/brevo';
 
 export const forgotPassword = async (req, res) => {
   try {
@@ -23,26 +24,39 @@ export const forgotPassword = async (req, res) => {
     user.otpExpiry = Date.now() + 10 * 60 * 1000;
 
     await user.save();
+
+
+
     // Create transporter
-    const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true only for port 465
-    family: 4, // Use IPv4
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-  await transporter.verify();
-  console.log("SMTP connection successful");
-    // Send Email
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Password Reset OTP",
-      text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+    const brevo = new BrevoClient({
+      apiKey: process.env.API_KEY, // Replace with your Brevo API key
     });
+
+    const result = await brevo.transactionalEmails.sendTransacEmail({
+      subject: "Password Reset OTP",
+      textContent: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+      sender: { name: "Notes App", email: "donaldmahantaofficial@gmail.com" },
+      to: [{ email: email }]
+    });
+  //   const transporter = nodemailer.createTransport({
+  //   host: "smtp.gmail.com",
+  //   port: 587,
+  //   secure: false, // true only for port 465
+  //   family: 4, // Use IPv4
+  //   auth: {
+  //     user: process.env.EMAIL_USER,
+  //     pass: process.env.EMAIL_PASS,
+  //   },
+  // });
+  // await transporter.verify();
+  // console.log("SMTP connection successful");
+  //   // Send Email
+  //   await transporter.sendMail({
+  //     from: process.env.EMAIL_USER,
+  //     to: email,
+  //     subject: "Password Reset OTP",
+  //     text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+  //   });
 
     res.status(200).json({
       message: "OTP sent successfully",
