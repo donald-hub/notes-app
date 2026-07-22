@@ -35,7 +35,7 @@ export const forgotPassword = async (req, res) => {
     const result = await brevo.transactionalEmails.sendTransacEmail({
       subject: "Password Reset OTP",
       textContent: `Your OTP is ${otp}. It will expire in 10 minutes.`,
-      sender: { name: "Notes App", email: EMAIL_USER },
+      sender: { name: "Notes App", email: process.env.EMAIL_USER },
       to: [{ email: email }]
     });
 
