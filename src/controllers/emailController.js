@@ -35,7 +35,7 @@ export const forgotPassword = async (req, res) => {
     const result = await brevo.transactionalEmails.sendTransacEmail({
       subject: "Password Reset OTP",
       textContent: `Your OTP is ${otp}. It will expire in 10 minutes.`,
-      sender: { name: "Notes App", email: process.env.EMAIL_USER },
+      sender: { name: process.env.SENDER_NAME, email: process.env.EMAIL_USER },
       to: [{ email: email }]
     });
 
@@ -106,8 +106,9 @@ export const resetPassword = async (req, res) => {
     }
 
     // Hash new password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     user.password = hashedPassword;
 
